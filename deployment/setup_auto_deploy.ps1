@@ -3,7 +3,7 @@
 # SETUP AUTO DEPLOY - One-click automatic deployment service
 #==============================================================================
 
-$ErrorActionPreference = "Stop"
+$ErrorActionPreference = "Continue"
 
 $CONFIG = @{
     GitRepo = "https://github.com/cgemise971/PropFirmEA.git"
@@ -23,7 +23,8 @@ Write-Host ""
 # 1. Git pull
 Write-Host "[1/4] Updating from GitHub..." -ForegroundColor Yellow
 Push-Location $CONFIG.ProjectPath
-git pull origin main 2>&1 | Out-Host
+$gitOutput = git pull origin main 2>&1
+Write-Host "      $gitOutput" -ForegroundColor Gray
 Pop-Location
 Write-Host "      Done!" -ForegroundColor Green
 
