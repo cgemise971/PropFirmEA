@@ -1,0 +1,56 @@
+; PropFirm Session Breakout EA - FTMO Challenge Mode
+; Optimized for FTMO Normal Challenge
+
+; === PROP FIRM SETTINGS ===
+PropFirmProfile=0
+TradeMode=0
+
+; === RISK MANAGEMENT ===
+RiskPercent=1.5
+MaxDailyDD=4.5
+MaxTotalDD=9.0
+MaxTradesPerDay=3
+MaxOpenTrades=1
+MaxSLPercent=5.0
+
+; === ASIAN RANGE SETTINGS ===
+AsianStartHour=0
+AsianEndHour=6
+MinRangePips=15.0
+MaxRangePips=60.0
+RangeATRMin=0.3
+RangeATRMax=2.0
+
+; === BREAKOUT SETTINGS ===
+EntryType=0
+BreakoutBuffer=3.0
+MomentumMinPercent=50.0
+RequireCloseOutside=true
+UseHTFFilter=true
+HTF_Timeframe=16388
+EMA_Fast=50
+EMA_Slow=200
+
+; === TAKE PROFIT SETTINGS ===
+TP1_RR=1.0
+TP1_Percent=40.0
+TP2_RangeMultiple=1.5
+TP2_Percent=30.0
+UseTrailingStop=true
+TrailingATRMultiplier=1.5
+
+; === FILTERS ===
+UseSpreadFilter=true
+MaxSpreadPips=1.5
+TradeLondonOpen=true
+TradeNYOpen=true
+UseNewsFilter=true
+NewsFilterMinutes=30
+CloseBeforeWeekend=true
+FridayCloseHour=20
+
+; === EA SETTINGS ===
+MagicNumber=234567
+TradeComment=SB_FTMO
+ShowDashboard=true
+DrawRangeOnChart=true

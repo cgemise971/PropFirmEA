@@ -1,0 +1,56 @@
+; PropFirm Session Breakout EA - E8 Markets One Step
+; Optimized for E8 Markets One Step Evaluation
+
+; === PROP FIRM SETTINGS ===
+PropFirmProfile=2
+TradeMode=0
+
+; === RISK MANAGEMENT ===
+RiskPercent=1.2
+MaxDailyDD=4.5
+MaxTotalDD=5.5
+MaxTradesPerDay=2
+MaxOpenTrades=1
+MaxSLPercent=5.0
+
+; === ASIAN RANGE SETTINGS ===
+AsianStartHour=0
+AsianEndHour=6
+MinRangePips=15.0
+MaxRangePips=50.0
+RangeATRMin=0.4
+RangeATRMax=1.8
+
+; === BREAKOUT SETTINGS ===
+EntryType=0
+BreakoutBuffer=3.0
+MomentumMinPercent=55.0
+RequireCloseOutside=true
+UseHTFFilter=true
+HTF_Timeframe=16388
+EMA_Fast=50
+EMA_Slow=200
+
+; === TAKE PROFIT SETTINGS ===
+TP1_RR=1.0
+TP1_Percent=50.0
+TP2_RangeMultiple=1.3
+TP2_Percent=30.0
+UseTrailingStop=true
+TrailingATRMultiplier=1.5
+
+; === FILTERS ===
+UseSpreadFilter=true
+MaxSpreadPips=1.2
+TradeLondonOpen=true
+TradeNYOpen=true
+UseNewsFilter=false
+NewsFilterMinutes=30
+CloseBeforeWeekend=false
+FridayCloseHour=20
+
+; === EA SETTINGS ===
+MagicNumber=234568
+TradeComment=SB_E8
+ShowDashboard=true
+DrawRangeOnChart=true
