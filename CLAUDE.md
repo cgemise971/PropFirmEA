@@ -20,7 +20,8 @@ PropFirmEA_Project/
 │   ├── PropFirm_SMC_EA_v1.mq5         # Strategie SMC/ICT
 │   ├── PropFirm_SessionBreakout_v1.mq5 # Breakout V1 (basique)
 │   ├── PropFirm_SessionBreakout_v2.mq5 # Breakout V2 (dynamique)
-│   └── PropFirm_SessionBreakout_v3.mq5 # Breakout V3 (qualite) [RECOMMANDE]
+│   ├── PropFirm_SessionBreakout_v3.mq5 # Breakout V3 (qualite)
+│   └── PropFirm_SessionBreakout_v4.mq5 # Breakout V4 (scanner) [RECOMMANDE]
 │
 ├── strategies/                         # Documentation des strategies
 │   ├── SMC_ICT_Strategy.md
@@ -68,39 +69,50 @@ PropFirmEA_Project/
 | Sessions | London & NY Kill Zones |
 | Risk | 1.5% challenge / 0.75% funded |
 
-### 2. PropFirm_SessionBreakout_v3 (RECOMMANDE)
-**Statut**: Implementé - Version optimisee
+### 2. PropFirm_SessionBreakout_v4 (RECOMMANDE)
+**Statut**: Implementé - Scanner multi-opportunites
 
 | Element | Description |
 |---------|-------------|
-| Strategie | Breakout range + Confluence scoring |
-| Scoring | 0-10 points (min 5 pour trader) |
-| Entrees | Breakout + Retest confirmation |
-| Filtres | ADX, MTF alignment, regime detection |
-| Risk | Structure-based SL + trailing |
+| Strategie | Multi-range scanner + 4 types d'entrees |
+| Ranges | Asian + London + Intraday (3 ranges) |
+| Scoring | 0-10 points (min 3 pour trader) |
+| Entrees | Breakout, Retest, Failed BO, Structure |
+| Detection | Squeeze Bollinger + ADX regime |
+| Capacite | 6 trades/jour, 2 positions simultanées |
+
+**4 Types d'Opportunites:**
+- **BREAKOUT** - Cassure classique du range
+- **RETEST** - Retour sur niveau casse (pullback)
+- **FAILED_BO** - Fausse cassure → fade oppose
+- **STRUCTURE** - Rebond sur extremite sans cassure
 
 **Systeme de Score:**
 - HTF Trend alignment: +3 pts
-- MTF Structure: +2 pts
-- ADX > 20: +2 pts
-- Session active: +1 pt
-- LTF Momentum: +2 pts
-- Retest confirm: +2 pts bonus
+- Range quality: +2 pts
+- ADX trending: +2 pts
+- Bollinger squeeze: +2 pts
+- Volume confirm: +1 pt
 
-### 3. PropFirm_SessionBreakout_v2 (Plus de trades)
+### 3. PropFirm_SessionBreakout_v3 (Qualite)
+**Statut**: Implementé - Tres selectif (peu de trades)
+
+- Breakout range + Confluence scoring (min 5/10)
+- Retest confirmation obligatoire
+- ADX, MTF alignment, regime detection
+
+### 4. PropFirm_SessionBreakout_v2 (Dynamique)
 **Statut**: Implementé - Plus agressif
 
 - Range dynamique (ATR-based)
 - Multiple sessions (Frankfurt, London, NY, London Close)
 - Entrees Breakout + Pullback
-- 5+ trades/semaine
 
-### 4. PropFirm_SessionBreakout_v1 (Basique)
+### 5. PropFirm_SessionBreakout_v1 (Basique)
 **Statut**: Implementé - Version simple
 
 - Range fixe Asian (00-06 UTC)
 - Breakout simple
-- Moins de trades mais conservateur
 
 ---
 
