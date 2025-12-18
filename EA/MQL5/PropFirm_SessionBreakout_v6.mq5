@@ -108,6 +108,7 @@ input bool RequirePattern = true;
 input bool RequireMomentum = true;
 input int RSI_Period = 14;
 input double MinRR = 1.5;
+input double TP1_RR = 1.5;                    // Take Profit 1 R:R ratio
 
 input group "========== SESSIONS =========="
 input bool TradeLondon = true;
@@ -1265,7 +1266,7 @@ void ShowDashboard() {
    // Current Signal
    s += "--------------- SIGNAL ---------------\n";
    if(g_currentSignal.isValid) {
-      s += signal.reason + "\n";
+      s += g_currentSignal.reason + "\n";
       s += "Score: " + IntegerToString(g_currentSignal.score) + "/10\n";
    } else {
       s += "No valid signal\n";
