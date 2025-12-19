@@ -517,21 +517,21 @@ void UpdateChallengeProgress() {
 
 //+------------------------------------------------------------------+
 //| MISE A JOUR RISK MANAGER                                         |
+//| Logique basee sur le DD utilise, pas les pertes consecutives    |
 //+------------------------------------------------------------------+
 void UpdateRiskManager() {
    g_risk.canTrade = true;
    g_risk.blockReason = "";
 
-   // Check DD limits
-   if(g_challenge.dailyDD >= MaxDailyDD * 0.9) {
-      g_risk.canTrade = false;
-      g_risk.blockReason = "Daily DD limit";
-      return;
-   }
+   // Calculer le % de DD utilise (daily et total)
+   double dailyDDUsedPercent = (MaxDailyDD > 0) ? (g_challenge.dailyDD / MaxDailyDD) * 100 : 0;
+   double totalDDUsedPercent = (MaxTotalDD > 0) ? (g_challenge.totalDD / MaxTotalDD) * 100 : 0;
+   double ddUsedPercent = MathMax(dailyDDUsedPercent, totalDDUsedPercent);
 
-   if(g_challenge.totalDD >= MaxTotalDD * 0.9) {
+   // SEUL blocage: si DD >= 90% du max autorise
+   if(ddUsedPercent >= 90) {
       g_risk.canTrade = false;
-      g_risk.blockReason = "Total DD limit";
+      g_risk.blockReason = StringFormat("DD %.0f%% - Protection", ddUsedPercent);
       return;
    }
 
@@ -550,33 +550,44 @@ void UpdateRiskManager() {
       return;
    }
 
-   // Check consecutive losses
-   if(g_stats.consecutiveLosses >= MaxConsecutiveLosses) {
-      g_stats.pauseTrading = true;
-      g_stats.pauseUntil = TimeCurrent() + 300; // 5 min pause
-      g_risk.canTrade = false;
-      g_risk.blockReason = "Consecutive losses - pause";
-      return;
-   }
+   // PAS DE BLOCAGE par consecutive losses - on ajuste le risk a la place
 
-   // Calculer le risk multiplier (compounding)
+   // Calculer le risk multiplier de base
    g_risk.riskMultiplier = 1.0;
 
-   // Bonus wins consecutifs
-   if(g_stats.consecutiveWins >= 5) {
-      g_risk.riskMultiplier = 1.50;
-   } else if(g_stats.consecutiveWins >= 3) {
-      g_risk.riskMultiplier = 1.25;
+   // === AJUSTEMENT BASÉ SUR LE DD UTILISÉ ===
+   // Plus on utilise de DD, plus on reduit le risk (mais on continue a trader)
+   if(ddUsedPercent >= 70) {
+      // DD 70-90%: risk reduit a 40%
+      g_risk.riskMultiplier = 0.40;
+   } else if(ddUsedPercent >= 50) {
+      // DD 50-70%: risk reduit a 60%
+      g_risk.riskMultiplier = 0.60;
+   } else if(ddUsedPercent >= 30) {
+      // DD 30-50%: risk reduit a 80%
+      g_risk.riskMultiplier = 0.80;
+   }
+   // DD < 30%: risk normal (1.0)
+
+   // === BONUS WINS CONSECUTIFS (seulement si DD < 50%) ===
+   if(ddUsedPercent < 50) {
+      if(g_stats.consecutiveWins >= 5) {
+         g_risk.riskMultiplier *= 1.50;  // +50%
+      } else if(g_stats.consecutiveWins >= 3) {
+         g_risk.riskMultiplier *= 1.25;  // +25%
+      }
    }
 
-   // Malus losses consecutifs
-   if(g_stats.consecutiveLosses >= 2) {
-      g_risk.riskMultiplier = 0.70;
+   // === MALUS LOSSES CONSECUTIFS (reduction, pas blocage) ===
+   if(g_stats.consecutiveLosses >= 4) {
+      g_risk.riskMultiplier *= 0.50;  // -50% apres 4 pertes
+   } else if(g_stats.consecutiveLosses >= 2) {
+      g_risk.riskMultiplier *= 0.70;  // -30% apres 2 pertes
    }
 
-   // Mode Turbo si active et en retard
+   // Mode Turbo si active et en retard (seulement si DD < 60%)
    g_risk.turboActive = false;
-   if(EnableTurboMode && g_challenge.isBehind && g_challenge.behindPercent > 10) {
+   if(EnableTurboMode && g_challenge.isBehind && g_challenge.behindPercent > 10 && ddUsedPercent < 60) {
       g_risk.turboActive = true;
       g_risk.riskMultiplier *= 1.3;
       g_risk.adjustedMaxTrades = MaxTradesPerDay + 5;
@@ -597,6 +608,9 @@ void UpdateRiskManager() {
          g_risk.adjustedMaxTrades = (int)(MaxTradesPerDay * 1.3);
          break;
    }
+
+   // Limiter le multiplier entre 0.3 et 2.0
+   g_risk.riskMultiplier = MathMax(0.3, MathMin(2.0, g_risk.riskMultiplier));
 
    g_risk.currentRisk = BaseRiskPercent * g_risk.riskMultiplier;
 }
