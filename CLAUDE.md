@@ -17,17 +17,30 @@ PropFirmEA_Project/
 ├── README.md                           # Guide d'installation rapide
 │
 ├── EA/MQL5/                            # Expert Advisors
+│   ├── PropFirm_Scalper_v8.mq5        # Scalper V8 [RECOMMANDE CHALLENGES]
 │   ├── PropFirm_SMC_EA_v1.mq5         # Strategie SMC/ICT
 │   ├── PropFirm_SessionBreakout_v1.mq5 # Breakout V1 (basique)
 │   ├── PropFirm_SessionBreakout_v2.mq5 # Breakout V2 (dynamique)
 │   ├── PropFirm_SessionBreakout_v3.mq5 # Breakout V3 (qualite)
-│   └── PropFirm_SessionBreakout_v4.mq5 # Breakout V4 (scanner) [RECOMMANDE]
+│   ├── PropFirm_SessionBreakout_v4.mq5 # Breakout V4 (scanner)
+│   ├── PropFirm_SessionBreakout_v5.mq5 # Breakout V5 (structure)
+│   ├── PropFirm_SessionBreakout_v6.mq5 # Breakout V6 (optimizer)
+│   └── PropFirm_SessionBreakout_v7.mq5 # Breakout V7 (adaptive)
+│
+├── EA/MQL5/Include/                    # Modules partages
+│   └── Dashboard_v2.mqh               # Dashboard compact lisible
 │
 ├── strategies/                         # Documentation des strategies
 │   ├── SMC_ICT_Strategy.md
-│   └── Session_Breakout.md
+│   ├── Session_Breakout.md
+│   └── Scalper_Strategy.md            # Scalper V8 documentation
 │
 ├── config/profiles/                    # Presets par prop firm
+│   ├── Scalper_FTMO_Challenge.set     # V8 Scalper presets
+│   ├── Scalper_FTMO_Funded.set
+│   ├── Scalper_E8_OneStep.set
+│   ├── Scalper_FundingPips_1Step.set
+│   ├── Scalper_The5ers_Bootcamp.set
 │   ├── FTMO_Normal_Challenge.set
 │   ├── FTMO_Normal_Funded.set
 │   ├── E8_One_Step.set
@@ -59,7 +72,34 @@ PropFirmEA_Project/
 
 ## Expert Advisors Disponibles
 
-### 1. PropFirm_SMC_EA_v1 (Smart Money Concepts)
+### 1. PropFirm_Scalper_v8 (RECOMMANDE CHALLENGES)
+**Statut**: Implementé - Scalping haute frequence
+
+| Element | Description |
+|---------|-------------|
+| Strategie | Scalping multi-paires, 4 types d'entrees |
+| Timeframe | M5 |
+| Paires | EURUSD, GBPUSD, USDJPY, XAUUSD |
+| Sessions | London Open/Peak, NY Open/Peak, London Close |
+| Risk | 0.5-0.8% par trade |
+| Capacite | 12-15 trades/jour, 2 positions max |
+
+**4 Types d'Entrees:**
+- **MOMENTUM** - Bougie forte > 40% range horaire
+- **MICRO_BREAKOUT** - Cassure range 1H + 3 pips
+- **PULLBACK** - Retour sur EMA21 dans tendance
+- **REVERSAL** - RSI extreme + pin bar (optionnel)
+
+**Caracteristiques Cles:**
+- Compounding agressif (+25% apres 3 wins, +50% apres 5 wins)
+- Mode Turbo si retard challenge (auto-adaptatif)
+- Dashboard compact V2 (lisible, 8 lignes)
+- Exit time-based (20 min max)
+- Partial close 50% a TP1, trail le reste
+
+**Performance Cible:** 10-15% mensuel
+
+### 2. PropFirm_SMC_EA_v1 (Smart Money Concepts)
 **Statut**: Implementé - En test
 
 | Element | Description |
@@ -69,50 +109,20 @@ PropFirmEA_Project/
 | Sessions | London & NY Kill Zones |
 | Risk | 1.5% challenge / 0.75% funded |
 
-### 2. PropFirm_SessionBreakout_v4 (RECOMMANDE)
-**Statut**: Implementé - Scanner multi-opportunites
+### 3. PropFirm_SessionBreakout (v1-v7)
+**Statut**: Anciennes versions - Remplacees par V8
 
-| Element | Description |
-|---------|-------------|
-| Strategie | Multi-range scanner + 4 types d'entrees |
-| Ranges | Asian + London + Intraday (3 ranges) |
-| Scoring | 0-10 points (min 3 pour trader) |
-| Entrees | Breakout, Retest, Failed BO, Structure |
-| Detection | Squeeze Bollinger + ADX regime |
-| Capacite | 6 trades/jour, 2 positions simultanées |
+| Version | Description | Limite |
+|---------|-------------|--------|
+| V7 | Adaptive mode | Trop conservateur |
+| V6 | Challenge optimizer | ~2-3% mensuel |
+| V5 | Structure-based | Peu de trades |
+| V4 | Multi-opportunity | 6 trades/jour max |
+| V3 | Quality scoring | Tres selectif |
+| V2 | Dynamic range | Multiple sessions |
+| V1 | Basic breakout | Range fixe |
 
-**4 Types d'Opportunites:**
-- **BREAKOUT** - Cassure classique du range
-- **RETEST** - Retour sur niveau casse (pullback)
-- **FAILED_BO** - Fausse cassure → fade oppose
-- **STRUCTURE** - Rebond sur extremite sans cassure
-
-**Systeme de Score:**
-- HTF Trend alignment: +3 pts
-- Range quality: +2 pts
-- ADX trending: +2 pts
-- Bollinger squeeze: +2 pts
-- Volume confirm: +1 pt
-
-### 3. PropFirm_SessionBreakout_v3 (Qualite)
-**Statut**: Implementé - Tres selectif (peu de trades)
-
-- Breakout range + Confluence scoring (min 5/10)
-- Retest confirmation obligatoire
-- ADX, MTF alignment, regime detection
-
-### 4. PropFirm_SessionBreakout_v2 (Dynamique)
-**Statut**: Implementé - Plus agressif
-
-- Range dynamique (ATR-based)
-- Multiple sessions (Frankfurt, London, NY, London Close)
-- Entrees Breakout + Pullback
-
-### 5. PropFirm_SessionBreakout_v1 (Basique)
-**Statut**: Implementé - Version simple
-
-- Range fixe Asian (00-06 UTC)
-- Breakout simple
+> Note: Ces versions sont conservees pour reference mais le **Scalper V8** est recommande pour les challenges.
 
 ---
 
@@ -173,14 +183,15 @@ Get-ScheduledTask -TaskName "PropFirmEA_AutoSync" | Select-Object State
 
 Avant mise en production sur challenge:
 
-| Metrique | Minimum | Cible |
-|----------|---------|-------|
-| Win Rate | 50% | 55-60% |
-| Profit Factor | 1.3 | 1.5+ |
-| Max DD | <8% | <5% |
-| RR Moyen | 1:1.2 | 1:1.5+ |
-| Trades/mois | 15+ | 25+ |
-| Backtest | 6 mois | 12+ mois |
+| Metrique | Minimum | Cible | V8 Scalper |
+|----------|---------|-------|------------|
+| Win Rate | 50% | 55-60% | 52%+ |
+| Profit Factor | 1.2 | 1.4+ | 1.3+ |
+| Max DD | <8% | <5% | <5% |
+| RR Moyen | 1:1 | 1:1.5+ | 1:1.2 |
+| Trades/mois | 15+ | 25+ | 200+ |
+| Profit mensuel | 5% | 10% | 12-15% |
+| Backtest | 6 mois | 12+ mois | 6 mois |
 
 ---
 
@@ -243,11 +254,14 @@ TradeData g_trade;
 
 ## Prochaines Etapes
 
-- [ ] Creer EA RSI Divergence (3eme strategie)
-- [ ] Optimiser Session Breakout V3 via backtest
+- [x] Creer Scalper V8 haute frequence
+- [x] Dashboard compact V2 (lisible)
+- [x] Multi-paires (EURUSD, GBPUSD, USDJPY, XAUUSD)
+- [x] Mode Turbo adaptatif
+- [ ] Backtester V8 sur 6-12 mois
 - [ ] Ajouter filtre de news API
-- [ ] Dashboard de monitoring temps reel
-- [ ] Multi-paires (GBPUSD, USDJPY)
+- [ ] Creer EA RSI Divergence (alternative)
+- [ ] Dashboard de monitoring temps reel (web)
 
 ---
 

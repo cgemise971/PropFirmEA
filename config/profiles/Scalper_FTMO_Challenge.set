@@ -1,0 +1,70 @@
+; ============================================
+; PropFirm Scalper V8 - FTMO Challenge
+; ============================================
+; Objectif: 10% en 30 jours
+; Max DD: 10% total, 5% daily
+; ============================================
+
+; === PROP FIRM ===
+PropFirm=0
+ChallengeTarget=10.0
+ChallengeDays=30
+
+; === MODE SCALPING ===
+ScalpMode=1
+EnableTurboMode=true
+
+; === RISK MANAGEMENT ===
+BaseRiskPercent=0.6
+MaxDailyDD=4.5
+MaxTotalDD=9.0
+MaxTradesPerDay=15
+MaxOpenPositions=2
+MaxConsecutiveLosses=3
+
+; === TYPES D'ENTREES ===
+UseMomentum=true
+UseMicroBreakout=true
+UsePullback=true
+UseReversal=false
+
+; === PARAMETRES ENTREE ===
+MomentumMinStrength=40.0
+RSI_Period=14
+RSI_MomentumUpper=55
+RSI_MomentumLower=45
+RSI_ReversalUpper=75
+RSI_ReversalLower=25
+EMA_Fast=21
+EMA_Slow=50
+MinSignalScore=3
+
+; === STOP LOSS & TAKE PROFIT ===
+SL_Pips=7.0
+TP1_RR=1.0
+TP1_ClosePercent=50.0
+TP2_RR=1.5
+BE_TriggerRR=0.5
+MaxHoldMinutes=20
+
+; === SESSIONS (UTC) ===
+TradeLondonOpen=true
+TradeLondonPeak=true
+TradeNYOpen=true
+TradeNYPeak=true
+TradeLondonClose=true
+
+; === MULTI-PAIRES ===
+TradeEURUSD=true
+TradeGBPUSD=true
+TradeUSDJPY=true
+TradeXAUUSD=false
+
+; === FILTRES ===
+MaxSpreadPips=1.5
+UseHTFFilter=true
+UseSpreadFilter=true
+
+; === AFFICHAGE ===
+DisplayMode=1
+MagicNumber=888801

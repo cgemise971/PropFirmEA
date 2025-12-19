@@ -6,7 +6,9 @@
 
 ## Objectif
 
-Créer et gérer une flotte de comptes prop firm générant **5-10% mensuel** de manière automatisée et respectant toutes les règles des différentes prop firms.
+Créer et gérer une flotte de comptes prop firm générant **10-15% mensuel** de manière automatisée et respectant toutes les règles des différentes prop firms.
+
+**Nouveau: Scalper V8** - EA haute fréquence conçu pour passer les challenges rapidement.
 
 ---
 
@@ -24,21 +26,26 @@ Créer et gérer une flotte de comptes prop firm générant **5-10% mensuel** de
 ```bash
 # 1. Copier les fichiers EA
 cp EA/MQL5/*.mq5 /path/to/MT5/MQL5/Experts/
+cp EA/MQL5/Include/*.mqh /path/to/MT5/MQL5/Include/
 
 # 2. Copier les configurations
 cp config/profiles/*.set /path/to/MT5/MQL5/Presets/
 
 # 3. Compiler l'EA dans MetaEditor
-# Ouvrir PropFirm_SMC_EA_v1.mq5 et compiler (F7)
+# Ouvrir PropFirm_Scalper_v8.mq5 et compiler (F7)
 ```
 
-### 3. Configuration
+### 3. Configuration (Scalper V8)
 
 1. Ouvrir MT5
-2. Attacher l'EA au graphique (EUR/USD M15 recommandé)
-3. Sélectionner le profil prop firm approprié
-4. Ajuster le mode (Challenge/Funded)
-5. Activer l'AutoTrading
+2. Attacher l'EA au graphique **M5** (EURUSD recommandé)
+3. Charger le preset correspondant à votre prop firm:
+   - `Scalper_FTMO_Challenge.set` pour FTMO
+   - `Scalper_E8_OneStep.set` pour E8 Markets
+   - `Scalper_FundingPips_1Step.set` pour Funding Pips
+   - `Scalper_The5ers_Bootcamp.set` pour The5ers
+4. Activer l'AutoTrading
+5. L'EA trade automatiquement pendant les sessions London/NY
 
 ---
 
@@ -82,7 +89,19 @@ PropFirmEA_Project/
 
 ## Stratégies Incluses
 
-### 1. SMC/ICT Institutional (Principal)
+### 1. Scalper V8 (RECOMMANDE pour Challenges)
+
+Scalping haute fréquence multi-paires:
+- 4 types d'entrées: Momentum, Breakout, Pullback, Reversal
+- 12-15 trades/jour
+- Compounding agressif (+25% après 3 wins)
+- Mode Turbo si retard sur challenge
+- Dashboard compact et lisible
+
+**Paires**: EURUSD, GBPUSD, USDJPY, XAUUSD
+**Performance cible**: WR 52-55%, PF 1.3+, **12-15% mensuel**
+
+### 2. SMC/ICT Institutional
 
 Stratégie basée sur les Smart Money Concepts:
 - Order Blocks
@@ -92,23 +111,14 @@ Stratégie basée sur les Smart Money Concepts:
 
 **Performance cible**: WR 55-62%, PF 1.6-2.2
 
-### 2. Session Breakout (Secondaire)
+### 3. Session Breakout (v1-v7)
 
-Exploitation des breakouts du range asiatique:
-- Range 00:00-06:00 UTC
-- Entrée sur breakout London/NY
-- Multi-TP avec trailing
+Exploitation des breakouts de range (versions précédentes):
+- Range Asian/London
+- Multiple timeframes
+- Scoring de qualité
 
-**Performance cible**: WR 55-62%, PF 1.4-1.8
-
-### 3. RSI Divergence (Tertiaire)
-
-Mean reversion sur divergences:
-- RSI(14) divergences H1/H4
-- Confirmation sur structure
-- Zones S/R significatives
-
-**Performance cible**: WR 50-55%, PF 1.3-1.6
+**Note**: Remplacé par Scalper V8 pour meilleure performance
 
 ---
 
@@ -161,14 +171,16 @@ Niveau 3 @ -3.5% jour: Stop journée
 Niveau 4 @ -4.5% jour: EA OFF
 ```
 
-### Paramètres par Mode
+### Paramètres par Mode (Scalper V8)
 
 | Paramètre | Challenge | Funded |
 |-----------|-----------|--------|
-| Risk/Trade | 1.5% | 0.75% |
-| Max DD Daily | 4.5% | 3.5% |
-| Max Trades/Jour | 4 | 3 |
-| RR Minimum | 1.5 | 1.8 |
+| Risk/Trade | 0.6% | 0.4% |
+| Max DD Daily | 4.5% | 4.0% |
+| Max Trades/Jour | 15 | 10 |
+| RR Cible | 1.2 | 1.5 |
+| Compounding | Agressif | Modéré |
+| Mode Turbo | Activé | Désactivé |
 
 ---
 
@@ -244,14 +256,17 @@ Documentation complète dans /docs/
 
 ## Roadmap
 
-- [x] EA principal MQL5
+- [x] EA principal MQL5 (SMC)
 - [x] Profiles prop firms
 - [x] Documentation stratégies
 - [x] Guide risk management
-- [ ] EA MQL4 (conversion)
+- [x] **Scalper V8 haute fréquence**
+- [x] **Dashboard compact V2**
+- [x] **Multi-paires (4 paires)**
+- [x] **Mode Turbo adaptatif**
+- [ ] Backtester V8 sur 6-12 mois
 - [ ] Dashboard web monitoring
 - [ ] API intégration news
-- [ ] Backtester automatisé
 - [ ] Multi-compte manager
 
 ---
