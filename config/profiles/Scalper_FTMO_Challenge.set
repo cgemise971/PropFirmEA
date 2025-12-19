@@ -15,12 +15,12 @@ ScalpMode=1
 EnableTurboMode=true
 
 ; === RISK MANAGEMENT ===
-BaseRiskPercent=0.6
-MaxDailyDD=4.5
-MaxTotalDD=9.0
-MaxTradesPerDay=15
+BaseRiskPercent=0.4
+MaxDailyDD=4.0
+MaxTotalDD=8.0
+MaxTradesPerDay=12
 MaxOpenPositions=2
-MaxConsecutiveLosses=3
+MaxConsecutiveLosses=5
 
 ; === TYPES D'ENTREES ===
 UseMomentum=true
@@ -37,7 +37,7 @@ RSI_ReversalUpper=75
 RSI_ReversalLower=25
 EMA_Fast=21
 EMA_Slow=50
-MinSignalScore=3
+MinSignalScore=4
 
 ; === STOP LOSS & TAKE PROFIT ===
 SL_Pips=7.0
@@ -58,7 +58,7 @@ TradeLondonClose=true
 TradeEURUSD=true
 TradeGBPUSD=true
 TradeUSDJPY=true
-TradeXAUUSD=false
+TradeXAUUSD=true
 
 ; === FILTRES ===
 MaxSpreadPips=1.5

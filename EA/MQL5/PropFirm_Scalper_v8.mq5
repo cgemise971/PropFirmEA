@@ -58,12 +58,12 @@ input ENUM_SCALP_MODE ScalpMode = MODE_BALANCED;        // Mode de Trading
 input bool EnableTurboMode = true;                       // Activer Mode Turbo
 
 input group "=== RISK MANAGEMENT ==="
-input double BaseRiskPercent = 0.6;                      // Risk par Trade (%)
-input double MaxDailyDD = 4.5;                           // Max DD Journalier (%)
-input double MaxTotalDD = 9.0;                           // Max DD Total (%)
-input int MaxTradesPerDay = 15;                          // Max Trades/Jour
+input double BaseRiskPercent = 0.4;                      // Risk par Trade (%) - reduit pour proteger DD
+input double MaxDailyDD = 4.0;                           // Max DD Journalier (%)
+input double MaxTotalDD = 8.0;                           // Max DD Total (%)
+input int MaxTradesPerDay = 12;                          // Max Trades/Jour
 input int MaxOpenPositions = 2;                          // Max Positions Ouvertes
-input int MaxConsecutiveLosses = 3;                      // Max Pertes Consecutives
+input int MaxConsecutiveLosses = 5;                      // Max Pertes Consecutives (non bloquant)
 
 input group "=== TYPES D'ENTREES ==="
 input bool UseMomentum = true;                           // Entrees Momentum
@@ -80,7 +80,7 @@ input int RSI_ReversalUpper = 75;                        // RSI Reversal Haut
 input int RSI_ReversalLower = 25;                        // RSI Reversal Bas
 input int EMA_Fast = 21;                                 // EMA Rapide
 input int EMA_Slow = 50;                                 // EMA Lente
-input int MinSignalScore = 3;                            // Score Minimum Signal
+input int MinSignalScore = 4;                            // Score Minimum Signal (augmente pour qualite)
 
 input group "=== STOP LOSS & TAKE PROFIT ==="
 input double SL_Pips = 7.0;                              // Stop Loss (pips base EURUSD)
@@ -101,7 +101,7 @@ input group "=== MULTI-PAIRES ==="
 input bool TradeEURUSD = true;                           // EURUSD
 input bool TradeGBPUSD = true;                           // GBPUSD
 input bool TradeUSDJPY = true;                           // USDJPY
-input bool TradeXAUUSD = false;                          // XAUUSD (volatil)
+input bool TradeXAUUSD = true;                           // XAUUSD (active)
 
 input group "=== FILTRES ==="
 input double MaxSpreadPips = 1.5;                        // Spread Max (pips)

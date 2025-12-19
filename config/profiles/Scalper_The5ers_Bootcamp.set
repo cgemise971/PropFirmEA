@@ -16,12 +16,12 @@ ScalpMode=0
 EnableTurboMode=false
 
 ; === RISK MANAGEMENT ===
-BaseRiskPercent=0.3
-MaxDailyDD=2.5
-MaxTotalDD=4.5
+BaseRiskPercent=0.25
+MaxDailyDD=2.0
+MaxTotalDD=4.0
 MaxTradesPerDay=8
 MaxOpenPositions=1
-MaxConsecutiveLosses=2
+MaxConsecutiveLosses=5
 
 ; === TYPES D'ENTREES ===
 UseMomentum=true
@@ -59,7 +59,7 @@ TradeLondonClose=false
 TradeEURUSD=true
 TradeGBPUSD=false
 TradeUSDJPY=false
-TradeXAUUSD=false
+TradeXAUUSD=true
 
 ; === FILTRES ===
 MaxSpreadPips=1.0
